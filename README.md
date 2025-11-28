@@ -99,6 +99,18 @@ These map directly to the `environment:` section in `docker-compose.yml`:
 
 ---
 
+## Disclaimer from Daryl
+
+Everything above has been written and developed by AI. This is a fully vibe-coded app. Take that for what it is, means different things to different people.
+I had a need, and a dream. I started with ChatGPT. Got a working Dockerfile, bash script and docker compose yaml. It worked but had no gui and would only work with one channel per container.
+I then turned to Cursor and gpt-5 in particular, continuing to vibe-code focussing on a web UI. Cursor invariably converted the script to python and built the frontend. I made sure it kept all the original functionality.
+
+If you find any issues, by all means let me know. If you have any feature requests that I agree with, I'll be happy to vibe-code some more.
+If you want to fork this and enhance it yourself, please do.
+This would not exist without yt-dlp or ffmpeg so thanks to those repos
+
+---
+
 ## License
 
 MIT — contributions welcome.
