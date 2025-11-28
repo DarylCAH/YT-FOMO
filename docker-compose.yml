@@ -1,0 +1,17 @@
+services:
+  nikand-live-recorder:
+    build: .
+    container_name: nikand-live-recorder
+    restart: unless-stopped
+    environment:
+      INTERVAL_SECONDS: 60
+      OUTPUT_DIR: /downloads
+      DATA_DIR: /data
+      GOTIFY_URL: "http://100.64.0.17:8580"
+      GOTIFY_TOKEN: "AH7nW.uKFrdl6FF"
+      TZ: Europe/London
+    volumes:
+      - /mnt/synology-data/youtarr-live:/downloads
+      - /mnt/synology-data/youtarr-live-data:/data
+    ports:
+      - "8090:8080"

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>YT-FOMO</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	<meta name="color-scheme" content="dark light">
+</head>
+<body>
+	<header class="container">
+		<h1>YT-FOMO</h1>
+		<p class="muted">Add channels, monitor live recording, and download past streams.</p>
+	</header>
+
+	<main class="container">
+		<section class="card">
+			<h2>Add channel</h2>
+			<div class="row">
+				<input id="urlInput" type="url" placeholder="Paste channel or live URL (e.g., https://www.yt.com/@name/live)">
+				<button id="resolveBtn">Resolve</button>
+			</div>
+			<div id="resolveInfo" class="resolve"></div>
+		</section>
+
+		<section class="card">
+			<h2>Channels</h2>
+			<div id="channels"></div>
+		</section>
+
+		<section class="card">
+			<h2>Recordings</h2>
+			<div class="row">
+				<select id="channelFilter"></select>
+				<button id="refreshRecs">Refresh</button>
+			</div>
+			<ul id="recordings" class="list"></ul>
+		</section>
+	</main>
+
+	<footer class="container muted small">
+		<span>Powered by yt-dlp</span>
+	</footer>
+
+	<script src="/static/app.js"></script>
+	<script>window.App.init();</script>
+</body>
+</html>
+
+
