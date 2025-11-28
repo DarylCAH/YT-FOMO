@@ -23,6 +23,8 @@ Dark-mode web UI and service that records live streams from YT channels while th
   - update after each recording (serialized across channels)
   - daily update when idle
 
+![Screenshot](./screenshot/Screenshot.png)
+
 ## Quickstart (Docker Compose)
 
 1) Create folders for data and downloads (these are mounted inside the container):
