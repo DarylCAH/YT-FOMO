@@ -1,17 +1,18 @@
 # YT-FOMO: Never Miss a Live Stream Again
 
-Have you ever gone back to watch a live broadcast only to find it’s gone private? That “uh oh” feeling has a name: YT FOMO — the fear of missing out on a live stream.
+Have you ever gone back to watch a live broadcast only to find it’s gone private? That “uh oh” feeling has a name:
+YT FOMO - the fear of missing out on a live stream.
 
 YT‑FOMO solves it. The moment a channel goes live, YT‑FOMO records the broadcast for you and saves it to your own storage. No more “video unavailable” surprises after the stream ends.
 
-Dark‑mode web UI · Multi‑channel ready · Per‑channel folders · Real‑time progress · One‑click downloads · Lightweight API · Runs great in Docker
+Dark‑mode web UI (only, not an option) · Multi‑channel ready · Per‑channel folders · Real‑time progress · One‑click downloads · Lightweight API · Runs great in Docker
 
 ---
 
 ## Why you’ll love it
 
 - **Catch every live, automatically** — YT‑FOMO polls each channel’s “live” endpoint and only records when a broadcast is actually live. No wasted disk on replays.
-- **Your archive, your rules** — Recordings are written straight to your disk as resilient `.mkv` files under `./downloads/<channel_name>/…`, so you can watch, trim, or back up on your terms.
+- **Your archive, your rules** — Recordings are written straight to your disk as `.mkv` files under `./downloads/<channel_name>/…`, so you can watch on your terms.
 - **Stay in the loop** — Optional Gotify notifications when a stream starts and when it ends (with duration and size). No more babysitting tabs.
 - **See progress at a glance** — Clear “Live” / “Not recording” badges, percent complete, ETA, and current filename in a clean, dark UI.
 - **Handles hiccups** — If a stream drops and restarts, YT‑FOMO quickly re‑checks and starts a new recording so you don’t miss the rest.
