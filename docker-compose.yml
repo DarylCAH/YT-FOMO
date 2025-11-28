@@ -1,17 +1,20 @@
 services:
-  nikand-live-recorder:
+  yt-fomo:
     build: .
-    container_name: nikand-live-recorder
+    container_name: yt-fomo
     restart: unless-stopped
     environment:
-      INTERVAL_SECONDS: 60
+      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-60}
       OUTPUT_DIR: /downloads
       DATA_DIR: /data
-      GOTIFY_URL: "http://100.64.0.17:8580"
-      GOTIFY_TOKEN: "AH7nW.uKFrdl6FF"
-      TZ: Europe/London
+      GOTIFY_URL: ${GOTIFY_URL:-}
+      GOTIFY_TOKEN: ${GOTIFY_TOKEN:-}
+      TZ: ${TZ:-UTC}
+      RETAIN_MAX_DAYS: ${RETAIN_MAX_DAYS:-0}
+      RETAIN_MAX_SIZE_GB: ${RETAIN_MAX_SIZE_GB:-0}
+      CLEAN_PART_AGE_HOURS: ${CLEAN_PART_AGE_HOURS:-0}
     volumes:
-      - /mnt/synology-data/youtarr-live:/downloads
-      - /mnt/synology-data/youtarr-live-data:/data
+      - ./downloads:/downloads
+      - ./data:/data
     ports:
-      - "8090:8080"
+      - "${HOST_PORT:-8090}:8080"

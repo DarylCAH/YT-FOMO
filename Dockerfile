@@ -8,10 +8,7 @@ WORKDIR /app
 
 # App files
 COPY app /app/app
-COPY watch.sh /app/watch.sh
-RUN chmod +x /app/watch.sh
 
-ENV CHANNEL_URL=""
 ENV INTERVAL_SECONDS=60
 ENV OUTPUT_DIR=/downloads
 ENV DATA_DIR=/data

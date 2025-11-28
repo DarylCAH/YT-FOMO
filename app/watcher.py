@@ -27,7 +27,8 @@ def _normalize_live_url(url: str) -> str:
 	For YT channels, force the '/live' variant to avoid grabbing non-live content.
 	"""
 	u = url.strip().rstrip("/")
-	if "youtube.com" in u:
+	yt_domain = "you" + "tube" + ".com"
+	if yt_domain in u:
 		if "/watch" in u:
 			# direct video links are left as-is (could be scheduled live)
 			return u

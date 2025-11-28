@@ -1,0 +1,9 @@
+.git
+.gitignore
+.env
+downloads
+data
+node_modules
+__pycache__
+*.pyc
+
