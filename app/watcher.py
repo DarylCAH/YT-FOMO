@@ -4,7 +4,7 @@ import re
 import shlex
 import threading
 import time
-from subprocess import Popen, PIPE, STDOUT
+from subprocess import Popen, PIPE, STDOUT, DEVNULL
 from typing import Dict, Optional, List
 from urllib import request, parse
 from collections import deque
@@ -132,9 +132,12 @@ class ChannelWatcher(threading.Thread):
 			"yt-dlp",
 			"--newline",
 			"--print-json",
+			"--no-warnings",
 			"--live-from-start",
 			"--merge-output-format",
 			"mkv",
+			"--extractor-args",
+			"youtube:player_client=default",
 			"-o",
 			output_template,
 			effective_url,
@@ -193,7 +196,12 @@ class ChannelWatcher(threading.Thread):
 		Run a quick, low-cost probe using yt-dlp to determine live state and details.
 		Returns dict: {live_status, title, thumbnail}
 		"""
+		proc = None
 		try:
+			# stderr MUST NOT merge into stdout: yt-dlp warnings (version-age,
+			# missing JS runtime) would prepend to the JSON and break json.loads,
+			# making every channel read as "not live". --no-warnings + DEVNULL
+			# keep stdout pure JSON; player_client=default matches the recorder.
 			proc = Popen(
 				[
 					"yt-dlp",
@@ -201,14 +209,17 @@ class ChannelWatcher(threading.Thread):
 					"--flat-playlist",
 					"--playlist-end",
 					"1",
+					"--no-warnings",
+					"--extractor-args",
+					"youtube:player_client=default",
 					url,
 				],
 				stdout=PIPE,
-				stderr=STDOUT,
+				stderr=DEVNULL,
 				text=True,
 			)
 			assert proc.stdout is not None
-			out, _ = proc.communicate(timeout=20)
+			out, _ = proc.communicate(timeout=45)
 			obj = json.loads(out)
 			def extract(entry: Dict[str, any]) -> Dict[str, Optional[str]]:
 				status = "is_live" if entry.get("is_live") else entry.get("live_status") or "not_live"
@@ -232,6 +243,12 @@ class ChannelWatcher(threading.Thread):
 					return extract(entries[0])
 			return {"live_status": "not_live", "title": None, "thumbnail": None}
 		except Exception:
+			# Includes TimeoutExpired — kill the child so slow probes don't leak.
+			if proc and proc.poll() is None:
+				try:
+					proc.kill()
+				except Exception:
+					pass
 			return {"live_status": "error", "title": None, "thumbnail": None}
 
 	def _notify(self, title: str, message: str, priority: int = 5) -> None:

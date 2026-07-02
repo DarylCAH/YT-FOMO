@@ -1,0 +1,152 @@
+/* ============================================================
+   homelab.css — design system for Daryl's homelab projects
+   Vendor this file and the fonts/ folder into each project,
+   link it, and build with the tokens and .hl-* components below.
+   ============================================================ */
+
+/* ---------- Fonts (self-hosted) ---------- */
+@font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/instrument-serif.woff2') format('woff2');}
+@font-face{font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/instrument-serif-italic.woff2') format('woff2');}
+@font-face{font-family:'IBM Plex Serif';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-serif.woff2') format('woff2');}
+@font-face{font-family:'IBM Plex Serif';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/ibm-plex-serif-600.woff2') format('woff2');}
+@font-face{font-family:'Space Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/space-mono.woff2') format('woff2');}
+@font-face{font-family:'Space Mono';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/space-mono-700.woff2') format('woff2');}
+
+:root{
+  /* Surfaces */
+  --hl-void:#0b0814;          /* page background */
+  --hl-surface:#15102a;       /* solid raised surface */
+  --hl-surface-hi:#221a3e;
+  --hl-glass:rgba(26,18,48,.55);     /* frosted glass panel */
+  --hl-glass-hi:rgba(42,29,78,.74);
+  --hl-edge:rgba(255,255,255,.10);   /* hairline edge on glass */
+  --hl-line:#2a2150;          /* solid border / hairline rule */
+  --hl-line-soft:#1d1638;
+
+  /* Accents — each has a saturated GLOW shade and a legible TEXT shade */
+  --hl-purple:#4e1fd8;  --hl-purple-text:#b9a6ff;  --hl-purple-rgb:78,31,216;   /* primary / regular */
+  --hl-azure:#3b82f6;   --hl-azure-text:#93c5fd;   --hl-azure-rgb:59,130,246;   /* routine / live / info */
+  --hl-amber:#f59e0b;   --hl-amber-text:#fcd34d;   --hl-amber-rgb:245,158,11;   /* critical / warning */
+  --hl-star:#f5c451;    /* literal stars in decorative motifs */
+
+  /* Neutrals */
+  --hl-text:#e8e6f3;  --hl-muted:#9b94b5;  --hl-dim:#6b6488;
+
+  /* Type */
+  --hl-title:'Instrument Serif',Georgia,serif;            /* page titles */
+  --hl-serif:'IBM Plex Serif',Georgia,serif;              /* headers (600) + body (400) */
+  --hl-mono:'Space Mono',ui-monospace,Menlo,monospace;    /* data, labels, controls */
+
+  /* Geometry & effects */
+  --hl-radius:14px;            /* panels, cards, filter bar */
+  --hl-radius-ctrl:12px;       /* buttons, inputs, segmented controls */
+  --hl-blur:blur(9px) saturate(135%);
+  --hl-shadow:0 4px 16px rgba(0,0,0,.34);
+  --hl-glow:0 0 24px rgba(var(--hl-purple-rgb),.7),0 0 11px rgba(var(--hl-purple-rgb),.55);  /* outward = active */
+  --hl-glow-in:inset 0 0 16px rgba(var(--hl-purple-rgb),.7);                                  /* inward = considering */
+  --hl-ease:.18s ease;
+
+  /* Per-control accent (Model B: one colour per control = gravity of the decision).
+     Default purple; set --hl-acc / --hl-acc-text / --hl-acc-rgb on a container to recolour. */
+  --hl-acc:var(--hl-purple); --hl-acc-text:var(--hl-purple-text); --hl-acc-rgb:var(--hl-purple-rgb);
+}
+.hl-routine { --hl-acc:var(--hl-azure);  --hl-acc-text:var(--hl-azure-text);  --hl-acc-rgb:var(--hl-azure-rgb); }
+.hl-critical{ --hl-acc:var(--hl-amber);  --hl-acc-text:var(--hl-amber-text);  --hl-acc-rgb:var(--hl-amber-rgb); }
+
+/* ---------- Type ---------- */
+.hl-title{font-family:var(--hl-title);font-weight:400;line-height:.95;letter-spacing:.005em;}
+.hl-title em{font-style:italic;color:var(--hl-purple-text);}
+.hl-h{font-family:var(--hl-serif);font-weight:600;line-height:1.2;}
+.hl-body{font-family:var(--hl-serif);font-weight:400;line-height:1.55;}
+.hl-eyebrow{font-family:var(--hl-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--hl-purple-text);}
+.hl-mono{font-family:var(--hl-mono);}
+
+/* ---------- Surfaces ---------- */
+.hl-card{background:var(--hl-glass);-webkit-backdrop-filter:var(--hl-blur);backdrop-filter:var(--hl-blur);
+  border:1px solid var(--hl-edge);border-radius:var(--hl-radius);box-shadow:var(--hl-shadow);}
+.hl-card--accent{border-left:2px solid var(--hl-acc);}     /* add .hl-routine/.hl-critical to recolour */
+
+/* Lift + outward glow on hover = "active".
+   position + hover z-index raise the panel above sibling glass panels so
+   the glow paints over them and fades out. */
+.hl-lift{position:relative;transition:transform var(--hl-ease),box-shadow var(--hl-ease),background var(--hl-ease),border-color var(--hl-ease);}
+.hl-lift:hover{transform:translateY(-2px);z-index:30;background:var(--hl-glass-hi);border-color:var(--hl-acc);
+  box-shadow:0 0 0 1px var(--hl-acc),0 12px 32px rgba(0,0,0,.48),var(--hl-glow);}
+
+/* ---------- Toggle button — state flow: soft tint → hover(inner glow) → selected(solid) → selected+hover(outer glow) ---------- */
+.hl-toggle{font-family:var(--hl-mono);font-size:13px;font-weight:700;padding:9px 15px;border-radius:var(--hl-radius-ctrl);
+  cursor:pointer;border:1px solid rgba(var(--hl-acc-rgb),.4);background:rgba(var(--hl-acc-rgb),.15);color:var(--hl-acc-text);
+  transition:all var(--hl-ease);}
+.hl-toggle:hover{background:rgba(var(--hl-acc-rgb),.26);border-color:rgba(var(--hl-acc-rgb),.65);box-shadow:var(--hl-glow-in);}
+.hl-toggle.is-selected{background:var(--hl-acc);border-color:var(--hl-acc);color:#fff;}
+.hl-toggle.is-selected:hover{box-shadow:var(--hl-glow);}
+
+/* ---------- Action button — solid at rest, outward glow on hover ---------- */
+.hl-btn{font-family:var(--hl-mono);font-size:13px;font-weight:700;padding:9px 15px;border-radius:var(--hl-radius-ctrl);
+  cursor:pointer;border:1px solid var(--hl-acc);background:var(--hl-acc);color:#fff;transition:all var(--hl-ease);}
+.hl-btn:hover{box-shadow:var(--hl-glow);}
+.hl-btn--secondary{background:transparent;border-color:var(--hl-azure);color:var(--hl-azure-text);font-weight:400;}
+.hl-btn--secondary:hover{box-shadow:0 0 18px rgba(var(--hl-azure-rgb),.5);}
+.hl-btn--ghost{background:transparent;border-color:transparent;color:var(--hl-muted);font-weight:400;}
+
+/* ---------- Segmented control (Model B: whole control one colour via --hl-acc) ---------- */
+.hl-seg{display:inline-flex;border:1px solid var(--hl-line);border-radius:var(--hl-radius-ctrl);overflow:hidden;}
+.hl-seg>button{font-family:var(--hl-mono);font-size:12px;font-weight:400;color:var(--hl-muted);background:transparent;
+  border:0;border-right:1px solid var(--hl-line);padding:8px 13px;cursor:pointer;transition:all var(--hl-ease);}
+.hl-seg>button:last-child{border-right:0;}
+.hl-seg>button:hover{color:var(--hl-text);}
+.hl-seg>button.is-on{background:var(--hl-acc);color:#fff;font-weight:700;}
+.hl-seg>button.is-on:hover{box-shadow:var(--hl-glow);}
+
+/* ---------- Filter chip ---------- */
+.hl-chip{font-family:var(--hl-mono);font-size:12px;padding:7px 12px;border-radius:999px;display:inline-flex;gap:8px;
+  align-items:center;cursor:pointer;border:1px solid rgba(var(--hl-acc-rgb),.4);background:rgba(var(--hl-acc-rgb),.14);
+  color:var(--hl-acc-text);transition:all var(--hl-ease);}
+.hl-chip .hl-dot{width:8px;height:8px;border-radius:50%;background:currentColor;}
+.hl-chip.is-on{background:var(--hl-acc);border-color:var(--hl-acc);color:#fff;box-shadow:var(--hl-glow);}
+
+/* ---------- Inputs ---------- */
+.hl-input,.hl-select{font-family:var(--hl-serif);font-size:14px;color:var(--hl-text);background:var(--hl-surface);
+  border:1px solid var(--hl-line);padding:9px 13px;border-radius:var(--hl-radius-ctrl);}
+.hl-select{font-family:var(--hl-mono);font-size:12.5px;}
+.hl-input::placeholder{color:var(--hl-dim);}
+.hl-input:focus,.hl-select:focus{outline:none;border-color:var(--hl-purple);box-shadow:0 0 0 3px rgba(var(--hl-purple-rgb),.18);}
+
+/* ---------- Filter bar — contained frosted panel ---------- */
+.hl-filter{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--hl-glass);
+  -webkit-backdrop-filter:var(--hl-blur);backdrop-filter:var(--hl-blur);border:1px solid var(--hl-edge);
+  border-radius:var(--hl-radius);padding:14px 16px;}
+
+/* ---------- Nav — pill group ---------- */
+.hl-nav{display:inline-flex;background:var(--hl-void);border:1px solid var(--hl-line);border-radius:var(--hl-radius-ctrl);overflow:hidden;}
+.hl-nav>a{font-family:var(--hl-mono);font-size:12px;color:var(--hl-muted);padding:8px 14px;text-decoration:none;
+  border-right:1px solid var(--hl-line);transition:all var(--hl-ease);}
+.hl-nav>a:last-child{border-right:0;}
+.hl-nav>a:hover{color:var(--hl-text);}
+.hl-nav>a.is-active{background:var(--hl-purple);color:#fff;font-weight:700;}
+
+/* ---------- Separators ---------- */
+.hl-hr{height:1px;background:var(--hl-line);border:0;}                         /* between rows / list items */
+.hl-rule{height:2px;width:45%;margin:18px auto;border-radius:2px;             /* section break — centred */
+  background:linear-gradient(90deg,transparent,var(--hl-purple),transparent);box-shadow:0 0 12px rgba(var(--hl-purple-rgb),.5);}
+/* Section header: an eyebrow with a short rule beneath, aligned to the text. */
+.hl-section{margin:8px 0 14px;}
+.hl-section>.hl-eyebrow{display:block;}
+.hl-section>.hl-section-rule{height:2px;width:84px;border-radius:2px;margin-top:7px;
+  background:linear-gradient(90deg,var(--hl-purple),transparent);}
+.hl-section.is-centered{text-align:center;}
+.hl-section.is-centered>.hl-section-rule{margin-left:auto;margin-right:auto;
+  background:linear-gradient(90deg,transparent,var(--hl-purple),transparent);}
+
+/* ---------- Status (semantic; separate from accent) ---------- */
+.hl-status{font-family:var(--hl-mono);font-size:12px;display:inline-flex;align-items:center;gap:7px;}
+.hl-status::before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 7px currentColor;}
+.hl-status--ok{color:var(--hl-azure-text);}      /* live / healthy */
+.hl-status--warn{color:var(--hl-amber-text);}    /* attention */
+.hl-status--bad{color:#f8717a;}                   /* down / error */
+.hl-status--bad::before{box-shadow:none;}
+
+@media (prefers-reduced-motion:reduce){
+  .hl-lift,.hl-toggle,.hl-btn,.hl-seg>button,.hl-chip{transition:none;}
+  .hl-lift:hover{transform:none;}
+}
