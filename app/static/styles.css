@@ -1,4 +1,20 @@
-/* YT-FOMO — styled on the homelab design system (homelab.css provides tokens + fonts). */
+/* YT-FOMO styling. Self-contained: only the design-system tokens and fonts this
+   project actually uses are inlined below — the full shared system is not vendored here. */
+@font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/instrument-serif.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; font-display: swap; src: url('fonts/instrument-serif-italic.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Serif'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/ibm-plex-serif.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Serif'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/ibm-plex-serif-600.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/space-mono.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url('fonts/space-mono-700.woff2') format('woff2'); }
+
+:root {
+	--hl-void: #0b0814; --hl-surface: #15102a; --hl-glass: rgba(26,18,48,.55); --hl-glass-hi: rgba(42,29,78,.74);
+	--hl-edge: rgba(255,255,255,.10); --hl-line: #2a2150; --hl-line-soft: #1d1638;
+	--hl-purple: #4e1fd8; --hl-purple-text: #b9a6ff; --hl-purple-rgb: 78,31,216;
+	--hl-azure: #3b82f6; --hl-azure-text: #93c5fd; --hl-azure-rgb: 59,130,246;
+	--hl-text: #e8e6f3; --hl-muted: #9b94b5; --hl-dim: #6b6488;
+	--hl-title: 'Instrument Serif', Georgia, serif; --hl-serif: 'IBM Plex Serif', Georgia, serif; --hl-mono: 'Space Mono', ui-monospace, Menlo, monospace;
+}
 :root {
 	--bg: var(--hl-void);
 	--surface: var(--hl-glass);        /* glass panels */
