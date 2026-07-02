@@ -27,7 +27,7 @@
 		var el = document.createElementNS(NS, 'path');
 		el.setAttribute('d', d(path));
 		el.setAttribute('fill', 'none');
-		el.setAttribute('stroke', '#f5c451');
+		el.setAttribute('stroke', '#fcd34d');
 		el.setAttribute('stroke-width', '2.2');
 		el.setAttribute('stroke-linecap', 'round');
 		el.setAttribute('stroke-linejoin', 'round');
@@ -41,7 +41,7 @@
 	svg.innerHTML =
 		'<defs>' +
 		'<filter id="bsoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.5"/></filter>' +
-		'<radialGradient id="bcore"><stop offset="0%" stop-color="#fff7e0"/><stop offset="40%" stop-color="#f5c451"/><stop offset="100%" stop-color="#f5c451" stop-opacity="0"/></radialGradient>' +
+		'<radialGradient id="bcore"><stop offset="0%" stop-color="#fff7e0"/><stop offset="40%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#fcd34d" stop-opacity="0"/></radialGradient>' +
 		'</defs>';
 
 	var glow = document.createElementNS(NS, 'circle');
