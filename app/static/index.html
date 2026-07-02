@@ -9,6 +9,7 @@
 	<meta name="color-scheme" content="dark light">
 </head>
 <body>
+	<div id="belly" aria-hidden="true"></div>
 	<header class="container">
 		<h1>YT-FOMO</h1>
 		<p class="muted">Add channels, monitor live recording, and download past streams.</p>
@@ -40,9 +41,10 @@
 	</main>
 
 	<footer class="container muted small">
-		<span>Powered by yt-dlp</span>
+		<a href="https://github.com/yt-dlp/yt-dlp" target="_blank" rel="noopener">Powered by yt-dlp</a>
 	</footer>
 
+	<script src="/static/bolts.js"></script>
 	<script src="/static/app.js"></script>
 	<script>window.App.init();</script>
 </body>

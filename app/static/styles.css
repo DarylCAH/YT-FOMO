@@ -17,6 +17,10 @@
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
+
+/* Bellibolt belly motif — fixed, centred, pure background (see bolts.js) */
+#belly { position: fixed; inset: 0; z-index: -1; pointer-events: none; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+#belly svg { width: min(94vw, 780px); height: auto; }
 body {
 	margin: 0;
 	background: var(--bg);
